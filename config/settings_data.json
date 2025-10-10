@@ -30,9 +30,9 @@
           "settings": {
             "background": "#002FA7",
             "background_gradient": "",
-            "text": "#FFFFFF",
+            "text": "#000000",
             "button": "#002FA7",
-            "button_label": "#FFFFFF",
+            "button_label": "#000000",
             "secondary_button_label": "#FFFFFF",
             "shadow": "#121212"
           }
