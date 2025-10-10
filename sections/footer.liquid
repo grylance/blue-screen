@@ -199,14 +199,12 @@
                     </label>
                     <button
                       type="submit"
-                      class="newsletter-form__button field__button"
+                      class="button"
                       name="commit"
                       id="Subscribe"
                       aria-label="{{ 'newsletter.button_label' | t }}"
                     >
-                      <span class="svg-wrapper">
-                        {{- 'icon-arrow.svg' | inline_asset_content -}}
-                      </span>
+                      SUBSCRIBE
                     </button>
                   </div>
                   {%- if form.errors -%}
@@ -297,20 +295,22 @@
         {%- endif -%}
       </div>
     </div>
+    <div class="footer__content-bottom-wrapper page-width">
+      <div class="header__logo-block">
+        {% render 'icon-logo' %}
+      </div>
+    </div>
     <div class="footer__content-bottom-wrapper page-width{% if section.settings.enable_country_selector == false and section.settings.enable_language_selector == false %} footer__content-bottom-wrapper--center{% endif %}">
       <div class="footer__copyright caption">
-        <small class="copyright__content"
-          >&copy; {{ 'now' | date: '%Y' }}, {{ shop.name | link_to: routes.root_url -}}
-        </small>
-        <small class="copyright__content">{{ powered_by_link }}</small>
+        <div class="copyright__content">&copy; {{ 'now' | date: '%Y' }}</div>
         {%- if section.settings.show_policy -%}
           <ul class="policies list-unstyled">
             {%- for policy in shop.policies -%}
               {%- if policy != blank -%}
                 <li>
-                  <small class="copyright__content"
-                    ><a href="{{ policy.url }}">{{ policy.title | escape }}</a></small
-                  >
+                  <div class="copyright__content">
+                    <a href="{{ policy.url }}">{{ policy.title | escape }}</a>
+                  </div>
                 </li>
               {%- endif -%}
             {%- endfor -%}

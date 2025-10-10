@@ -118,7 +118,7 @@ cart-items .title-wrapper-with-link {
 }
 
 .product-option {
-  font-size: 1.4rem;
+  font-size: 3rem;
   word-break: break-word;
   line-height: calc(1 + 0.5 / var(--font-body-scale));
 }
