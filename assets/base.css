@@ -2520,7 +2520,12 @@ input[type='checkbox'] {
   padding: 0;
   height: auto;
   width: auto;
+  line-height: calc(1 + 0.3 / var(--font-body-scale));
 }
+
+/* .header__icon--search {
+
+} */
 
 .header__icon span {
   height: auto;
@@ -2694,6 +2699,26 @@ details[open] .modal-overlay::after {
     position: initial;
     margin-left: 0.5rem;
   }
+}
+
+
+/* Header Logo SVG */
+
+.header__logo-block {
+  grid-column: 1 / -1;
+  width: 100%;
+  color: rgb(var(--color-foreground));
+  height: auto;
+}
+
+.header__logo-block a {
+  color: rgb(var(--color-foreground));
+}
+
+.header__logo-block svg {
+  width: 100%;
+  display: block;
+  height: auto;
 }
 
 /* Header menu drawer */
