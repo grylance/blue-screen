@@ -41,6 +41,10 @@
   .search__button .icon {
     height: 1.8rem;
   }
+
+  .no-results {
+    text-align: center;
+  }
 </style>
 
 {%- liquid
@@ -111,7 +115,11 @@
                 <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span>
               {%- endif -%}
 
-              <button type="submit" class="search__button field__button" aria-label="{{ 'general.search.search' | t }}">
+              <button
+                type="submit"
+                class="search__button field__button hidden"
+                aria-label="{{ 'general.search.search' | t }}"
+              >
                 <span class="svg-wrapper">
                   {{- 'icon-search.svg' | inline_asset_content -}}
                 </span>
@@ -124,15 +132,8 @@
         {%- endif -%}
       </div>
       {%- if search.performed -%}
-        {%- unless section.settings.enable_filtering or section.settings.enable_sorting -%}
-          {%- if search.results_count > 0 -%}
-            <p role="status">
-              {{ 'templates.search.results_with_count_and_term' | t: terms: search.terms, count: search.results_count }}
-            </p>
-          {%- endif -%}
-        {%- endunless -%}
         {%- if search.results_count == 0 and search.filters == empty -%}
-          <p role="status">{{ 'templates.search.no_results' | t: terms: search.terms }}</p>
+          <h3 role="status" class="no-results">{{ 'templates.search.no_results' | t: terms: search.terms }}</h3>
         {%- endif -%}
       {%- endif -%}
     </div>

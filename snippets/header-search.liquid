@@ -57,7 +57,7 @@
             >
             <label class="field__label" for="{{ input_id }}">{{ 'general.search.search' | t }}</label>
             <input type="hidden" name="options[prefix]" value="last">
-            <button class="search__button field__button" aria-label="{{ 'general.search.search' | t }}">
+            <button class="search__button field__button hidden" aria-label="{{ 'general.search.search' | t }}">
               <span class="svg-wrapper">
                 {{- 'icon-search.svg' | inline_asset_content -}}
               </span>
@@ -79,7 +79,7 @@
         {%- endif -%}
         <button
           type="button"
-          class="search-modal__close-button modal__close-button link link--text focus-inset"
+          class="search-modal__close-button modal__close-button link link--text focus-inset hidden"
           aria-label="{{ 'accessibility.close' | t }}"
         >
           <span class="svg-wrapper">

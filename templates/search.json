@@ -12,8 +12,8 @@
     "main": {
       "type": "main-search",
       "settings": {
-        "columns_desktop": 4,
-        "image_ratio": "adapt",
+        "columns_desktop": 3,
+        "image_ratio": "square",
         "show_secondary_image": false,
         "show_vendor": false,
         "show_rating": false,
