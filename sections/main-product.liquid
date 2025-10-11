@@ -96,7 +96,7 @@
 
           {%- if product.metafields.custom.product_metadata != blank -%}
             <div class="product__description rte quick-add-hidden">
-              {{ product.metafields.custom.product_metadata }}
+              {{ product.metafields.custom.product_metadata | newline_to_br }}
             </div>
           {%- endif -%}
 
