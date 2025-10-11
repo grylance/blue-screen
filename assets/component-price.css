@@ -1,5 +1,5 @@
 .price {
-  font-size: 1.6rem;
+  font-size: 3rem;
   letter-spacing: 0.1rem;
   line-height: calc(1 + 0.5 / var(--font-body-scale));
   color: rgb(var(--color-foreground));
@@ -38,15 +38,8 @@
 }
 
 .price--large {
-  font-size: 1.6rem;
+  font-size: 3rem;
   line-height: calc(1 + 0.5 / var(--font-body-scale));
-  letter-spacing: 0.13rem;
-}
-
-@media screen and (min-width: 750px) {
-  .price--large {
-    font-size: 1.8rem;
-  }
 }
 
 .price--sold-out .price__availability,
@@ -87,7 +80,7 @@
 .price--on-sale .price-item--regular {
   text-decoration: line-through;
   color: rgb(var(--color-foreground));
-  font-size: 1.3rem;
+  font-size: 3rem;
 }
 
 .unit-price {

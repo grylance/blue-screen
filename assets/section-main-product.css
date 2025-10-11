@@ -60,35 +60,6 @@ product-info {
   }
 }
 
-@media screen and (min-width: 990px) {
-  .product--large:not(.product--no-media) .product__media-wrapper {
-    max-width: 65%;
-    width: calc(65% - var(--grid-desktop-horizontal-spacing) / 2);
-  }
-
-  .product--large:not(.product--no-media) .product__info-wrapper {
-    padding: 0 0 0 4rem;
-    max-width: 35%;
-    width: calc(35% - var(--grid-desktop-horizontal-spacing) / 2);
-  }
-
-  .product--large:not(.product--no-media).product--right .product__info-wrapper {
-    padding: 0 4rem 0 0;
-  }
-
-  .product--medium:not(.product--no-media) .product__media-wrapper,
-  .product--small:not(.product--no-media) .product__info-wrapper {
-    max-width: 55%;
-    width: calc(55% - var(--grid-desktop-horizontal-spacing) / 2);
-  }
-
-  .product--medium:not(.product--no-media) .product__info-wrapper,
-  .product--small:not(.product--no-media) .product__media-wrapper {
-    max-width: 45%;
-    width: calc(45% - var(--grid-desktop-horizontal-spacing) / 2);
-  }
-}
-
 /* Dynamic checkout */
 
 .shopify-payment-button__button {
@@ -229,6 +200,7 @@ product-info {
 .product__info-container .product__description,
 .product__info-container .icon-with-text {
   margin: 2.5rem 0;
+  font-size: 3rem;
 }
 
 .product__text {
@@ -247,8 +219,9 @@ a.product__text {
 
 .product__title {
   word-break: break-word;
-  margin-bottom: 1.5rem;
-}
+  margin-bottom: 4rem;
+  text-align: center;
+g}
 
 .product__title > * {
   margin: 0;
@@ -298,6 +271,10 @@ a.product__text {
 
   .product__info-container > *:first-child {
     margin-top: 0;
+  }
+
+  .product__title {
+
   }
 }
 
@@ -361,10 +338,6 @@ a.product__text {
 
 .product-form__quantity-top .form__label {
   margin-bottom: 1.2rem;
-}
-
-.product-form__buttons {
-  max-width: 44rem;
 }
 
 .product--no-media .product__info-container > modal-opener {

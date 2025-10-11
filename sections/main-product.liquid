@@ -73,6 +73,15 @@
   {%- endif -%}
 
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
+  <div class="page-width product__title">
+    <h1>
+      {%- if product.metafields.custom.sub_title != blank -%}
+        {{ product.metafields.custom.sub_title | escape }}
+        <br>
+      {%- endif -%}
+      <i>{{ product.title | escape }}</i>
+    </h1>
+  </div>
   <div class="page-width">
     <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
       <div class="grid__item product__media-wrapper">
@@ -84,6 +93,12 @@
           class="product__info-container{% if section.settings.enable_sticky_info %} product__column-sticky{% endif %}"
         >
           {%- assign product_form_id = 'product-form-' | append: section.id -%}
+
+          {%- if product.metafields.custom.product_metadata != blank -%}
+            <div class="product__description rte quick-add-hidden">
+              {{ product.metafields.custom.product_metadata }}
+            </div>
+          {%- endif -%}
 
           {%- for block in section.blocks -%}
             {%- case block.type -%}
@@ -99,9 +114,7 @@
               {%- when 'title' -%}
                 <div class="product__title" {{ block.shopify_attributes }}>
                   {%- if product.metafields.custom.sub_title != blank -%}
-                    <p class="product__subtitle caption-with-letter-spacing light">
-                      {{ product.metafields.custom.sub_title | escape }}
-                    </p>
+                    {{ product.metafields.custom.sub_title | escape }}
                   {%- endif -%}
                   <h1>{{ product.title | escape }}</h1>
                   <a href="{{ product.url }}" class="product__title">
@@ -122,20 +135,6 @@
                 {%- if product.quantity_price_breaks_configured? -%}
                   <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
                     <span>{{ 'products.product.volume_pricing.note' | t }}</span>
-                  </div>
-                {%- endif -%}
-                {%- if cart.taxes_included or cart.duties_included or shop.shipping_policy.body != blank -%}
-                  <div class="product__tax caption rte">
-                    {%- if cart.duties_included and cart.taxes_included -%}
-                      {{ 'products.product.duties_and_taxes_included' | t }}
-                    {%- elsif cart.taxes_included -%}
-                      {{ 'products.product.taxes_included' | t }}
-                    {%- elsif cart.duties_included -%}
-                      {{ 'products.product.duties_included' | t }}
-                    {%- endif -%}
-                    {%- if shop.shipping_policy.body != blank -%}
-                      {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
-                    {%- endif -%}
                   </div>
                 {%- endif -%}
                 <div {{ block.shopify_attributes }}>
