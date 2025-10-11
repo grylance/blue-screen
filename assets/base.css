@@ -1732,7 +1732,7 @@ details[open] > .share-button__fallback {
   align-items: center;
   background-color: transparent;
   border: 0;
-  color: currentColor;
+  color: #002fa7;
   cursor: pointer;
   display: flex;
   height: 100%;
@@ -2005,6 +2005,7 @@ input[type='checkbox'] {
 .modal__close-button .icon {
   width: 1.7rem;
   height: 1.7rem;
+  color: #002fa7;
 }
 
 .modal__content {
