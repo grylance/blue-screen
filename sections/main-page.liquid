@@ -25,6 +25,120 @@
   </div>
 </div>
 
+{% if page.metafields.custom.radio_shows %}
+  <div class="page-width radio-shows">
+    {% for show in page.metafields.custom.radio_shows.value %}
+      <a class="radio-show" href="{{ show.link.url }}" target="_blank">
+        {% if show.image %}
+          <div
+            class="radio-show-image"
+            style="background-image: url({{ show.image | image_url: width: 1000 }})"
+          >
+            &nbsp;
+          </div>
+        {% endif %}
+        {{ show.title }}
+      </a>
+    {% endfor %}
+  </div>
+
+  <script>
+    (function () {
+      let scrollInterval;
+      let isScrolling = true;
+
+      // Configuration
+      const scrollSpeed = 0.5; // pixels per frame (lower = slower)
+      const fps = 60; // frames per second
+
+      // Start auto-scrolling
+      function startAutoScroll() {
+        scrollInterval = setInterval(() => {
+          if (isScrolling) {
+            window.scrollBy(0, scrollSpeed);
+
+            // Stop if we've reached the bottom
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+              stopAutoScroll();
+            }
+          }
+        }, 1000 / fps);
+      }
+
+      // Stop auto-scrolling
+      function stopAutoScroll() {
+        isScrolling = false;
+        clearInterval(scrollInterval);
+        removeEventListeners();
+      }
+
+      // Event listeners for user interaction
+      function handleInteraction() {
+        stopAutoScroll();
+      }
+
+      function addEventListeners() {
+        // Mouse interactions
+        window.addEventListener('wheel', handleInteraction, { passive: true });
+        window.addEventListener('mousedown', handleInteraction);
+        window.addEventListener('touchstart', handleInteraction, { passive: true });
+
+        // Keyboard interactions
+        window.addEventListener('keydown', handleInteraction);
+      }
+
+      function removeEventListeners() {
+        window.removeEventListener('wheel', handleInteraction);
+        window.removeEventListener('mousedown', handleInteraction);
+        window.removeEventListener('touchstart', handleInteraction);
+        window.removeEventListener('keydown', handleInteraction);
+      }
+
+      // Initialize
+      addEventListeners();
+      startAutoScroll();
+    })();
+  </script>
+{% endif %}
+
+<style>
+  .radio-shows {
+  }
+
+  a.radio-show {
+    text-align: center;
+    color: white !important;
+    text-decoration: none;
+    display: block;
+    font-size: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  a.radio-show h3 {
+    color: white;
+  }
+
+  .radio-show-image {
+    padding-bottom: 56.5%;
+    display: block;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 3rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .radio-shows {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6%;
+    }
+
+    a.radio-show {
+      width: 47%;
+    }
+  }
+</style>
+
 {% schema %}
 {
   "name": "t:sections.main-page.name",
