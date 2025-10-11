@@ -221,7 +221,11 @@ a.product__text {
   word-break: break-word;
   margin-bottom: 4rem;
   text-align: center;
-g}
+}
+
+.product__title h1 {
+  font-size: 3rem;
+}
 
 .product__title > * {
   margin: 0;
@@ -261,6 +265,10 @@ g}
 }
 
 @media screen and (min-width: 750px) {
+  .product__title h1 {
+    font-size: 5rem;
+  }
+
   .product__info-container {
     max-width: 60rem;
   }
