@@ -1465,3 +1465,26 @@ g}
     border: none;
   }
 }
+
+@keyframes product-load-flash {
+  0% {
+    opacity: 100%;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.product__load-flash {
+  animation: product-load-flash 0.4s steps(1);
+  background: #002fa7;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0;
+  z-index: 10000;
+  pointer-events: none;
+}
