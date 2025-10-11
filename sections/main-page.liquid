@@ -14,6 +14,12 @@
   }
 {%- endstyle -%}
 
+<div class="page-width section-{{ section.id }}-padding">
+  <div class="rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    {{ page.content }}
+  </div>
+</div>
+
 {% if page.metafields.custom.radio_shows %}
   <div class="page-width radio-shows">
     {% for show in page.metafields.custom.radio_shows.value %}
