@@ -1191,10 +1191,10 @@ button.shopify-payment-button__button--unbranded {
   justify-content: center;
   align-items: center;
   border: 0;
-  padding: 1.5rem 3rem 0.5rem;
+  padding: 1.4rem 3rem 0.5rem;
   cursor: pointer;
   font: inherit;
-  font-size: 3rem;
+  font-size: 2.5rem;
   text-decoration: none;
   color: rgb(var(--color-button-text));
   transition: box-shadow var(--duration-short) ease;
@@ -1270,7 +1270,7 @@ button.shopify-payment-button__button--unbranded {
 .button-label,
 .shopify-challenge__button,
 .customer button {
-  font-size: 3rem;
+  font-size: 2.5rem;
 }
 
 .button--tertiary {
