@@ -2475,8 +2475,14 @@ input[type='checkbox'] {
   justify-self: end;
   justify-content: flex-end;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
   margin-left: auto;
+}
+
+@media screen and (min-width: 500px) {
+  .header__icons {
+    gap: 2rem;
+  }
 }
 
 .header__icons .shopify-app-block {
@@ -2687,6 +2693,8 @@ details[open] .modal-overlay::after {
   width: 100%;
   color: rgb(var(--color-foreground));
   height: auto;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .header__logo-block a {
@@ -3569,4 +3577,17 @@ details-disclosure > details {
   100% {
     transform: translateX(100%) scaleX(0);
   }
+}
+
+/** big links (for use on explore page) **/
+
+a.big_link {
+  font-size: 100px;
+  text-align: center;
+  display: block;
+  text-decoration: none;
+}
+
+a.big_link:hover {
+  text-decoration: underline;
 }
