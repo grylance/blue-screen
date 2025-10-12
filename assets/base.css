@@ -381,9 +381,7 @@ blockquote {
 }
 
 .caption {
-  font-size: 3rem;
-  letter-spacing: 0.07rem;
-  line-height: calc(1 + 0.7 / var(--font-body-scale));
+  font-size: 2rem;
 }
 
 @media screen and (min-width: 750px) {
