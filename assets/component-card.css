@@ -275,7 +275,7 @@
   align-self: flex-end;
   grid-row-start: 3;
   justify-self: flex-start;
-  margin: 0.2rem auto 0;
+  margin: 0.4rem auto 0;
 }
 
 .card__badge.top {

@@ -181,7 +181,13 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
 }
 
 .rte {
-  font-size: 3rem;
+  font-size: 2rem;
+}
+
+@media only screen and (min-width: 750px) {
+  .rte {
+    font-size: 3rem;
+  }
 }
 
 .rte-width {
@@ -294,19 +300,19 @@ h5,
 
 h1,
 .h1 {
-  font-size: 5rem;
+  font-size: 3rem;
 }
 
 @media only screen and (min-width: 750px) {
   h1,
   .h1 {
-    font-size: 5rem;
+    font-size: 4.5rem;
   }
 }
 
 h2,
 .h2 {
-  font-size: 5rem;
+  font-size: 3rem;
 }
 
 @media only screen and (min-width: 750px) {
@@ -318,13 +324,13 @@ h2,
 
 h3,
 .h3 {
-  font-size: 5rem;
+  font-size: 2rem;
 }
 
 @media only screen and (min-width: 750px) {
   h3,
   .h3 {
-    font-size: 5rem;
+    font-size: 3rem;
   }
 }
 
@@ -332,12 +338,19 @@ h4,
 .h4 {
   font-family: var(--font-heading-family);
   font-style: var(--font-heading-style);
-  font-size: 3rem;
+  font-size: 2rem;
+}
+
+@media only screen and (min-width: 750px) {
+  h4,
+  .h4 {
+    font-size: 3rem;
+  }
 }
 
 h5,
 .h5 {
-  font-size: 3rem;
+  font-size: 2rem;
 }
 
 @media only screen and (min-width: 750px) {
@@ -402,7 +415,6 @@ blockquote {
 .field__input,
 .form__label,
 .select__select {
-  font-size: 3rem;
   letter-spacing: 0.04rem;
 }
 
@@ -489,9 +501,17 @@ h6:empty {
   text-underline-offset: 0.3rem;
   color: rgb(var(--color-link));
   background-color: transparent;
-  font-size: 3rem;
+  font-size: 2rem;
   font-family: inherit;
 }
+
+@media only screen and (min-width: 750px) {
+  .link,
+  .customer a {
+    font-size: 3rem;
+  }
+}
+
 
 .link--text {
   color: rgb(var(--color-foreground));
@@ -1191,16 +1211,25 @@ button.shopify-payment-button__button--unbranded {
   justify-content: center;
   align-items: center;
   border: 0;
-  padding: 1.4rem 3rem 0.5rem;
+  padding: 1.4rem 1.5rem 0.8rem;
   cursor: pointer;
   font: inherit;
-  font-size: 2.5rem;
+  font-size: 2rem;
   text-decoration: none;
   color: rgb(var(--color-button-text));
   transition: box-shadow var(--duration-short) ease;
   -webkit-appearance: none;
   appearance: none;
   background-color: rgba(var(--color-button), var(--alpha-button-background));
+}
+
+@media screen and (min-width: 750px) {
+  .button,
+  .shopify-challenge__button,
+  .customer button {
+    font-size: 3rem;
+    padding: 2rem 2rem 1rem;
+  }
 }
 
 .button:before,
@@ -1264,13 +1293,6 @@ button.shopify-payment-button__button--unbranded {
 .button:focus:not(:focus-visible):not(.focused),
 .shopify-payment-button__button--unbranded:focus:not(:focus-visible):not(.focused) {
   box-shadow: inherit;
-}
-
-.button,
-.button-label,
-.shopify-challenge__button,
-.customer button {
-  font-size: 2.5rem;
 }
 
 .button--tertiary {
@@ -1540,14 +1562,9 @@ details[open] > .share-button__fallback {
   font-family: var(--font-body-family);
   font-style: var(--font-body-style);
   font-weight: var(--font-body-weight);
-  font-size: 3rem;
+  font-size: 2rem;
   width: 100%;
   box-sizing: border-box;
-  transition: box-shadow var(--duration-short) ease;
-  border-radius: var(--inputs-radius);
-  height: 6rem;
-  min-height: calc(var(--inputs-border-width) * 2);
-  min-width: calc(7rem + (var(--inputs-border-width) * 2));
   position: relative;
   border: 3px solid;
 }
@@ -1564,9 +1581,6 @@ details[open] > .share-button__fallback {
   right: 0;
   bottom: 0;
   left: 0;
-  border-radius: var(--inputs-radius-outset);
-  box-shadow: var(--inputs-shadow-horizontal-offset) var(--inputs-shadow-vertical-offset)
-    var(--inputs-shadow-blur-radius) rgba(var(--color-shadow), var(--inputs-shadow-opacity));
   z-index: -1;
 }
 
@@ -1677,22 +1691,29 @@ details[open] > .share-button__fallback {
 .customer .field input {
   flex-grow: 1;
   text-align: left;
-  padding: 1.5rem;
+  padding: 1.5rem 2rem;
   margin: var(--inputs-border-width);
   transition: box-shadow var(--duration-short) ease;
 }
 
 .field__label,
 .customer .field label {
-  font-size: 3rem;
-  left: calc(var(--inputs-border-width) + 2rem);
-  top: calc(1rem + var(--inputs-border-width));
+  font-size: 2rem;
+  left: 2rem;
+  top: 1.6rem;
   margin-bottom: 0;
   pointer-events: none;
   position: absolute;
   transition: top var(--duration-short) ease, font-size var(--duration-short) ease;
   color: rgb(var(--color-foreground));
   line-height: 1.5;
+}
+
+@media screen and (min-width: 750px) {
+  .field__label,
+  .field__input {
+    font-size: 3rem;
+  }
 }
 
 .field__input:focus ~ .field__label,
@@ -2910,9 +2931,9 @@ details-disclosure > details {
 
 .badge {
   display: inline-block;
-  font-size: 2rem;
+  font-size: 1.5rem;
   line-height: 1;
-  padding: 1rem 1rem 0.2em;
+  padding: 1rem 1rem 0.6rem;
   text-align: center;
   background-color: rgb(var(--color-foreground));
   color: rgb(var(--color-background));
