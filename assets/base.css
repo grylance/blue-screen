@@ -1219,6 +1219,7 @@ button.shopify-payment-button__button--unbranded {
   -webkit-appearance: none;
   appearance: none;
   background-color: rgba(var(--color-button), var(--alpha-button-background));
+  border-radius: 0;
 }
 
 @media screen and (min-width: 750px) {
@@ -1689,16 +1690,17 @@ details[open] > .share-button__fallback {
 .customer .field input {
   flex-grow: 1;
   text-align: left;
-  padding: 1.5rem 2rem;
+  padding: 1rem 2rem;
   margin: var(--inputs-border-width);
   transition: box-shadow var(--duration-short) ease;
+  border-radius: 0;
 }
 
 .field__label,
 .customer .field label {
   font-size: 2rem;
   left: 2rem;
-  top: 1.6rem;
+  top: 1.3rem;
   margin-bottom: 0;
   pointer-events: none;
   position: absolute;
@@ -1711,6 +1713,15 @@ details[open] > .share-button__fallback {
   .field__label,
   .field__input {
     font-size: 3rem;
+  }
+
+  .field__input {
+    padding: 1.5rem 2rem;
+  }
+
+  .field__label {
+    top: 1.8rem;
+    left: 2.4rem;
   }
 }
 
