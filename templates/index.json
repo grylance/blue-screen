@@ -42,7 +42,7 @@
       "type": "video",
       "name": "t:sections.video.presets.name",
       "settings": {
-        "heading": "SIGN UP FOR EARLY ACCESS",
+        "heading": "",
         "heading_size": "hxl",
         "enable_video_looping": false,
         "video": "shopify://files/videos/0325(1).mov",
