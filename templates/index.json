@@ -42,9 +42,9 @@
       "type": "video",
       "name": "t:sections.video.presets.name",
       "settings": {
-        "heading": "",
-        "heading_size": "h1",
-        "enable_video_looping": true,
+        "heading": "SIGN UP FOR EARLY ACCESS",
+        "heading_size": "hxl",
+        "enable_video_looping": false,
         "video": "shopify://files/videos/0325(1).mov",
         "video_url": "https://vimeo.com/1177072722?fl=pl&fe=sh",
         "description": "",
