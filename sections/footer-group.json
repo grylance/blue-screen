@@ -11,8 +11,43 @@
   "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
+    "newsletter_QR6ewe": {
+      "type": "newsletter",
+      "blocks": {
+        "heading_t7rnFR": {
+          "type": "heading",
+          "settings": {
+            "heading": "Sign up for early access",
+            "heading_size": "h1"
+          }
+        },
+        "paragraph_L6aMLy": {
+          "type": "paragraph",
+          "settings": {
+            "text": ""
+          }
+        },
+        "email_form_mgAAb4": {
+          "type": "email_form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "heading_t7rnFR",
+        "paragraph_L6aMLy",
+        "email_form_mgAAb4"
+      ],
+      "name": "t:sections.newsletter.presets.name",
+      "settings": {
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 24,
+        "padding_bottom": 12
+      }
+    },
     "footer": {
       "type": "footer",
+      "disabled": true,
       "settings": {
         "color_scheme": "scheme-1",
         "newsletter_enable": true,
@@ -30,6 +65,7 @@
     }
   },
   "order": [
+    "newsletter_QR6ewe",
     "footer"
   ]
 }
