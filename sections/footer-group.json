@@ -16,15 +16,16 @@
       "blocks": {
         "heading_t7rnFR": {
           "type": "heading",
+          "disabled": true,
           "settings": {
             "heading": "Sign up for early access",
             "heading_size": "h1"
           }
         },
-        "paragraph_L6aMLy": {
+        "paragraph_qwpfJb": {
           "type": "paragraph",
           "settings": {
-            "text": ""
+            "text": "<p>Sign up for early access to the collection</p>"
           }
         },
         "email_form_mgAAb4": {
@@ -34,15 +35,15 @@
       },
       "block_order": [
         "heading_t7rnFR",
-        "paragraph_L6aMLy",
+        "paragraph_qwpfJb",
         "email_form_mgAAb4"
       ],
       "name": "t:sections.newsletter.presets.name",
       "settings": {
         "color_scheme": "",
-        "full_width": true,
+        "full_width": false,
         "padding_top": 24,
-        "padding_bottom": 12
+        "padding_bottom": 24
       }
     },
     "footer": {
