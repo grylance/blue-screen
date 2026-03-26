@@ -37,6 +37,9 @@
         "paragraph_eHdhM8",
         "email_form_JhJNrA"
       ],
+      "custom_css": [
+        ".newsletter button {display: none;}"
+      ],
       "name": "t:sections.newsletter.presets.name",
       "settings": {
         "color_scheme": "scheme-2",
