@@ -42,7 +42,7 @@
       "type": "video",
       "name": "t:sections.video.presets.name",
       "settings": {
-        "video": "shopify://files/videos/0325(1).mov",
+        "video": "shopify://files/videos/0325(5).mov",
         "video_url": ""
       }
     },
@@ -104,15 +104,15 @@
       "blocks": {
         "ai_gen_block_e1da53e_g3F38e": {
           "type": "ai_gen_block_e1da53e",
+          "disabled": true,
           "settings": {
-            "video": "shopify://files/videos/0325(5).mov",
+            "video": "shopify://files/videos/0325(1).mov",
             "autoplay": true,
             "loop": true,
             "muted": true,
-            "controls": false,
+            "controls": true,
             "video_border_radius": 0,
             "desktop_width_percent": 100,
-            "logo": "shopify://shop_images/Blue_Screen_-_Logo_-_White.png",
             "logo_position": "top-left",
             "logo_width": 150,
             "logo_offset": 20,
@@ -125,12 +125,17 @@
         "ai_gen_block_e1da53e_g3F38e"
       ],
       "settings": {}
+    },
+    "17745426181ee43db3": {
+      "type": "_blocks",
+      "settings": {}
     }
   },
   "order": [
     "featured_collection",
     "video_aAhBVx",
     "image_banner_qFBfnf",
-    "1774542129df0afae2"
+    "1774542129df0afae2",
+    "17745426181ee43db3"
   ]
 }

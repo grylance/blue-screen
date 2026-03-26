@@ -11,6 +11,10 @@
   "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
+    "1774542465d05c9607": {
+      "type": "_blocks",
+      "settings": {}
+    },
     "newsletter_QR6ewe": {
       "type": "newsletter",
       "blocks": {
@@ -27,16 +31,11 @@
           "settings": {
             "text": "<p>Register for early access to DROP 0</p>"
           }
-        },
-        "email_form_mgAAb4": {
-          "type": "email_form",
-          "settings": {}
         }
       },
       "block_order": [
         "heading_t7rnFR",
-        "paragraph_qwpfJb",
-        "email_form_mgAAb4"
+        "paragraph_qwpfJb"
       ],
       "name": "t:sections.newsletter.presets.name",
       "settings": {
@@ -66,6 +65,7 @@
     }
   },
   "order": [
+    "1774542465d05c9607",
     "newsletter_QR6ewe",
     "footer"
   ]
