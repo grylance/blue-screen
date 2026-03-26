@@ -1,242 +1,142 @@
 {{ 'video-section.css' | asset_url | stylesheet_tag }}
-{{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
-  .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
-  }
+.video-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 1;
+}
 
-  @media screen and (min-width: 750px) {
-    .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top }}px;
-      padding-bottom: {{ section.settings.padding_bottom }}px;
-    }
-  }
+.video-wrapper iframe,
+.video-wrapper video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-  .video-section__media iframe,
-  .video-section__media video {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-  }
+.video-wrapper video {
+  pointer-events: none;
+}
 
-  .video-section__media iframe {
-    border: 0;
-  }
+.sound-toggle {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 10;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0.8;
+}
 
-  .video-section__media video {
-    pointer-events: none;
-  }
+.sound-toggle:hover {
+  opacity: 1;
+}
 {%- endstyle -%}
 
-{%- liquid
-  assign video_id = section.settings.video.id | default: section.settings.video_url.id
-  assign video_alt = section.settings.video.alt | default: section.settings.description
-  assign alt = 'sections.video.load_video' | t: description: video_alt | escape
-  assign poster = section.settings.video.preview_image | default: section.settings.cover_image
+<div class="video-wrapper">
 
-  if section.settings.video != null and poster != null
-    assign ratio_diff = section.settings.video.aspect_ratio | minus: poster.aspect_ratio | abs
-    if ratio_diff < 0.01 and ratio_diff > 0
-      assign fix_ratio = true
-    endif
-  endif
--%}
+  {%- if section.settings.video == null and section.settings.video_url != null -%}
 
-{%- capture sizes -%}
-  {% if section.settings.full_width -%}
-    100vw
+    {%- if section.settings.video_url.type == 'vimeo' -%}
+
+      <iframe
+        id="bg-video"
+        src="https://player.vimeo.com/video/{{ section.settings.video_url.id }}?autoplay=1&loop=1&muted=1&background=1&api=1"
+        frameborder="0"
+        allow="autoplay; fullscreen"
+        allowfullscreen>
+      </iframe>
+
+    {%- endif -%}
+
   {%- else -%}
-    (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 }}px, (min-width: 750px)
-    calc(100vw - 10rem), 100vw
-  {%- endif %}
-{%- endcapture -%}
 
-<div class="color-{{ section.settings.color_scheme }} gradient">
-  <div class="video-section isolate{% unless section.settings.full_width %} page-width{% endunless %} section-{{ section.id }}-padding">
-    <div
-      {% if section.settings.full_width %}
-        class="page-width"
-      {% endif %}
-    >
-      {%- unless section.settings.heading == blank -%}
-        <div class="title-wrapper title-wrapper--no-top-margin{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-          <h2 class="title inline-richtext {{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>
-        </div>
-      {%- endunless -%}
-    </div>
+    {{
+      section.settings.video
+      | video_tag:
+        autoplay: true,
+        loop: true,
+        muted: true,
+        controls: false,
+        playsinline: true,
+        id: 'bg-video'
+    }}
 
-    <div
-      class="video-section__media gradient global-media-settings{% if section.settings.full_width %} global-media-settings--full-width{% endif %}{% if fix_ratio %} media-fit-cover{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-      {% if poster != null %}
-        style="--ratio-percent: {{ 1 | divided_by: poster.aspect_ratio | times: 100 }}%;"
-      {% endif %}
-    >
-      {%- if section.settings.video == null and section.settings.video_url != null -%}
-        {%- if section.settings.video_url.type == 'youtube' -%}
-          <iframe
-            src="https://www.youtube.com/embed/{{ video_id }}?autoplay=1&mute=1&loop=1&playlist={{ video_id }}&controls=0&playsinline=1&rel=0&modestbranding=1"
-            class="js-youtube"
-            allow="autoplay; encrypted-media"
-            allowfullscreen
-            title="{{ section.settings.description | escape }}"
-          ></iframe>
-        {%- else -%}
-          <iframe
-            src="https://player.vimeo.com/video/{{ video_id }}?background=1&autoplay=1&loop=1&muted=1"
-            class="js-vimeo"
-            allow="autoplay; fullscreen"
-            allowfullscreen
-            title="{{ section.settings.description | escape }}"
-          ></iframe>
-        {%- endif -%}
-      {%- else -%}
-        {{
-          section.settings.video
-          | video_tag:
-            image_size: '1100x',
-            autoplay: true,
-            loop: section.settings.enable_video_looping,
-            controls: false,
-            muted: true,
-            playsinline: true
-        }}
-      {%- endif -%}
-    </div>
-  </div>
+  {%- endif -%}
+
 </div>
+
+<button class="sound-toggle" id="soundToggle">Sound on</button>
+
+<script src="https://player.vimeo.com/api/player.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const btn = document.getElementById("soundToggle");
+  const video = document.getElementById("bg-video");
+
+  let isMuted = true;
+
+  function updateLabel() {
+    btn.textContent = isMuted ? "Sound on" : "Sound off";
+  }
+
+  updateLabel();
+
+  // Vimeo
+  if (video && video.tagName === "IFRAME") {
+    const player = new Vimeo.Player(video);
+
+    btn.addEventListener("click", async () => {
+      isMuted = !isMuted;
+      await player.setVolume(isMuted ? 0 : 1);
+      updateLabel();
+    });
+  }
+
+  // Native video
+  if (video && video.tagName === "VIDEO") {
+    video.muted = true;
+
+    btn.addEventListener("click", () => {
+      isMuted = !isMuted;
+      video.muted = isMuted;
+      updateLabel();
+    });
+  }
+
+});
+</script>
 
 {% schema %}
 {
-  "name": "t:sections.video.name",
-  "tag": "section",
-  "class": "section",
-  "disabled_on": {
-    "groups": ["header", "footer"]
-  },
+  "name": "Fullscreen Video",
   "settings": [
-    {
-      "type": "inline_richtext",
-      "id": "heading",
-      "default": "t:sections.video.settings.heading.default",
-      "label": "t:sections.video.settings.heading.label"
-    },
-    {
-      "type": "select",
-      "id": "heading_size",
-      "options": [
-        {
-          "value": "h2",
-          "label": "t:sections.all.heading_size.options__1.label"
-        },
-        {
-          "value": "h1",
-          "label": "t:sections.all.heading_size.options__2.label"
-        },
-        {
-          "value": "h0",
-          "label": "t:sections.all.heading_size.options__3.label"
-        },
-        {
-          "value": "hxl",
-          "label": "t:sections.all.heading_size.options__4.label"
-        },
-        {
-          "value": "hxxl",
-          "label": "t:sections.all.heading_size.options__5.label"
-        }
-      ],
-      "default": "h1",
-      "label": "t:sections.all.heading_size.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_video_looping",
-      "label": "t:sections.video.settings.enable_video_looping.label",
-      "default": false
-    },
-    {
-      "type": "header",
-      "content": "t:sections.video.settings.header__1.content"
-    },
     {
       "type": "video",
       "id": "video",
-      "label": "t:sections.video.settings.video.label"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.video.settings.header__2.content"
-    },
-    {
-      "type": "paragraph",
-      "content": "t:sections.video.settings.paragraph.content"
+      "label": "Upload video"
     },
     {
       "type": "video_url",
       "id": "video_url",
-      "accept": ["youtube", "vimeo"],
-      "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-      "label": "t:sections.video.settings.video_url.label",
-      "info": "t:sections.video.settings.video_url.info"
-    },
-    {
-      "type": "image_picker",
-      "id": "cover_image",
-      "label": "t:sections.video.settings.cover_image.label"
-    },
-    {
-      "type": "text",
-      "id": "description",
-      "label": "t:sections.video.settings.description.label",
-      "info": "t:sections.video.settings.description.info"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.video.settings.header__3.content"
-    },
-    {
-      "type": "checkbox",
-      "id": "full_width",
-      "label": "t:sections.video.settings.full_width.label",
-      "default": false
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:sections.all.colors.label",
-      "default": "scheme-1"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.all.padding.section_padding_heading"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.all.padding.padding_top",
-      "default": 36
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.all.padding.padding_bottom",
-      "default": 36
+      "accept": ["vimeo"],
+      "label": "Vimeo URL"
     }
   ],
   "presets": [
     {
-      "name": "t:sections.video.presets.name"
+      "name": "Fullscreen Video"
     }
   ]
 }
