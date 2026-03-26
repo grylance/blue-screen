@@ -42,13 +42,67 @@
       "type": "video",
       "name": "t:sections.video.presets.name",
       "settings": {
-        "video": "shopify://files/videos/0325(5).mov",
-        "video_url": "https://vimeo.com/1177072722?fl=pl&fe=sh"
+        "video": "shopify://files/videos/0325(1).mov",
+        "video_url": ""
+      }
+    },
+    "image_banner_qFBfnf": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_xEFNaW": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "heading": "Image banner",
+            "heading_size": "h1"
+          }
+        },
+        "text_HCHRqf": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "Give customers details about the banner image(s) or content on the template.",
+            "text_style": "body"
+          }
+        },
+        "buttons_AGcAir": {
+          "type": "buttons",
+          "disabled": true,
+          "settings": {
+            "button_label_1": "",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "Button label",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_xEFNaW",
+        "text_HCHRqf",
+        "buttons_AGcAir"
+      ],
+      "disabled": true,
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/Blue_Screen_-_Logo_-_White.png",
+        "image_overlay_opacity": 0,
+        "image_height": "adapt",
+        "image_behavior": "none",
+        "desktop_content_position": "top-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": true,
+        "color_scheme": "",
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "center",
+        "show_text_below": true
       }
     }
   },
   "order": [
     "featured_collection",
-    "video_aAhBVx"
+    "video_aAhBVx",
+    "image_banner_qFBfnf"
   ]
 }
