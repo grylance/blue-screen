@@ -42,7 +42,7 @@
       "type": "video",
       "name": "t:sections.video.presets.name",
       "settings": {
-        "video": "shopify://files/videos/0325(5).mov",
+        "video": "shopify://files/videos/0325(1).mov",
         "video_url": ""
       }
     }
