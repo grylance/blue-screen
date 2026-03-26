@@ -3,12 +3,12 @@
 {%- style -%}
 .video-wrapper {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
   z-index: 1;
+  pointer-events: none;
 }
 
 .video-wrapper iframe,
@@ -18,25 +18,26 @@
   object-fit: cover;
 }
 
-.video-wrapper video {
+.video-section-spacer {
+  position: relative;
+  height: 100vh;
+  z-index: 2;
   pointer-events: none;
 }
-
-/* SOUND TOGGLE */
 
 .sound-toggle {
   position: fixed;
   bottom: 24px;
   right: 24px;
-  z-index: 10;
+  z-index: 20;
   background: none;
   border: none;
   cursor: pointer;
   opacity: 0;
   transition: opacity 0.3s ease;
+  pointer-events: auto;
 }
 
-/* only show on hover */
 body:hover .sound-toggle {
   opacity: 0.6;
 }
@@ -47,9 +48,7 @@ body:hover .sound-toggle {
 {%- endstyle -%}
 
 <div class="video-wrapper">
-
   {%- if section.settings.video == null and section.settings.video_url != null -%}
-
     <iframe
       id="bg-video"
       src="https://player.vimeo.com/video/{{ section.settings.video_url.id }}?autoplay=1&loop=1&muted=1&background=1&api=1"
@@ -57,9 +56,7 @@ body:hover .sound-toggle {
       allow="autoplay; fullscreen"
       allowfullscreen>
     </iframe>
-
   {%- else -%}
-
     {{
       section.settings.video
       | video_tag:
@@ -70,14 +67,12 @@ body:hover .sound-toggle {
         playsinline: true,
         id: 'bg-video'
     }}
-
   {%- endif -%}
-
 </div>
 
-<button class="sound-toggle" id="soundToggle" aria-label="Toggle sound">
+<div class="video-section-spacer"></div>
 
-  <!-- SOUND ON -->
+<button class="sound-toggle" id="soundToggle" aria-label="Toggle sound">
   <span id="icon-on" style="display:none;">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
       <path d="M3 10v4h4l5 5V5l-5 5H3z"/>
@@ -86,7 +81,6 @@ body:hover .sound-toggle {
     </svg>
   </span>
 
-  <!-- SOUND OFF -->
   <span id="icon-off">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
       <path d="M3 10v4h4l5 5V5l-5 5H3z"/>
@@ -94,17 +88,14 @@ body:hover .sound-toggle {
       <line x1="22" y1="8" x2="16" y2="16" stroke="white" stroke-width="2"/>
     </svg>
   </span>
-
 </button>
 
 <script src="https://player.vimeo.com/api/player.js"></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-
   const btn = document.getElementById("soundToggle");
   const video = document.getElementById("bg-video");
-
   const iconOn = document.getElementById("icon-on");
   const iconOff = document.getElementById("icon-off");
 
@@ -117,7 +108,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   updateIcon();
 
-  // Vimeo
   if (video && video.tagName === "IFRAME") {
     const player = new Vimeo.Player(video);
 
@@ -128,7 +118,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Native video
   if (video && video.tagName === "VIDEO") {
     video.muted = true;
 
@@ -138,7 +127,6 @@ document.addEventListener("DOMContentLoaded", function () {
       updateIcon();
     });
   }
-
 });
 </script>
 
