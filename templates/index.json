@@ -11,6 +11,7 @@
   "sections": {
     "featured_collection": {
       "type": "featured-collection",
+      "disabled": true,
       "settings": {
         "collection": "all",
         "products_to_show": 16,
@@ -39,7 +40,6 @@
     },
     "video_aAhBVx": {
       "type": "video",
-      "disabled": true,
       "name": "t:sections.video.presets.name",
       "settings": {
         "heading": "",
