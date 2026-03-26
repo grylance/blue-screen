@@ -98,11 +98,39 @@
         "mobile_content_alignment": "center",
         "show_text_below": true
       }
+    },
+    "1774542129df0afae2": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_e1da53e_g3F38e": {
+          "type": "ai_gen_block_e1da53e",
+          "settings": {
+            "video": "shopify://files/videos/0325(5).mov",
+            "autoplay": true,
+            "loop": true,
+            "muted": true,
+            "controls": false,
+            "video_border_radius": 0,
+            "desktop_width_percent": 100,
+            "logo": "shopify://shop_images/Blue_Screen_-_Logo_-_White.png",
+            "logo_position": "top-left",
+            "logo_width": 150,
+            "logo_offset": 20,
+            "logo_opacity": 1
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_e1da53e_g3F38e"
+      ],
+      "settings": {}
     }
   },
   "order": [
     "featured_collection",
     "video_aAhBVx",
-    "image_banner_qFBfnf"
+    "image_banner_qFBfnf",
+    "1774542129df0afae2"
   ]
 }
