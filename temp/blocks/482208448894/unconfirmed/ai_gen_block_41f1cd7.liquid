@@ -1,6 +1,215 @@
+{% doc %}
+  @prompt
+    add logo to this secgtion
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-logo-block-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    padding: {{ block.settings.padding_top }}px {{ block.settings.padding_horizontal }}px {{ block.settings.padding_bottom }}px {{ block.settings.padding_horizontal }}px;
+    background-color: {{ block.settings.background_color }};
+    text-align: {{ block.settings.alignment }};
+  }
+
+  .ai-logo-wrapper-{{ ai_gen_id }} {
+    display: inline-block;
+    max-width: 100%;
+  }
+
+  .ai-logo-link-{{ ai_gen_id }} {
+    display: inline-block;
+    text-decoration: none;
+  }
+
+  .ai-logo-image-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.logo_width }}px;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .ai-logo-placeholder-{{ ai_gen_id }} {
+    display: inline-block;
+    width: {{ block.settings.logo_width }}px;
+    max-width: 100%;
+    background-color: #f4f4f4;
+    border-radius: 4px;
+    position: relative;
+  }
+
+  .ai-logo-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .ai-logo-empty-state-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 16px;
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-logo-image-{{ ai_gen_id }},
+    .ai-logo-placeholder-{{ ai_gen_id }} {
+      width: {{ block.settings.logo_width_mobile }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-logo-block-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-logo-wrapper-{{ ai_gen_id }}">
+    {% if block.settings.logo_link != blank %}
+      <a href="{{ block.settings.logo_link }}" class="ai-logo-link-{{ ai_gen_id }}">
+    {% endif %}
+    
+    {% if block.settings.logo != blank %}
+      <img
+        src="{{ block.settings.logo | image_url: width: 600 }}"
+        alt="{{ block.settings.logo.alt | default: shop.name | escape }}"
+        class="ai-logo-image-{{ ai_gen_id }}"
+        width="{{ block.settings.logo.width }}"
+        height="{{ block.settings.logo.height }}"
+        loading="lazy"
+      >
+    {% else %}
+      <div class="ai-logo-placeholder-{{ ai_gen_id }}">
+        {{ 'image' | placeholder_svg_tag }}
+        <div class="ai-logo-empty-state-{{ ai_gen_id }}">
+          Add your logo
+        </div>
+      </div>
+    {% endif %}
+    
+    {% if block.settings.logo_link != blank %}
+      </a>
+    {% endif %}
+  </div>
+</div>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Logo",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image"
+    },
+    {
+      "type": "url",
+      "id": "logo_link",
+      "label": "Logo link"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 50,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "label": "Desktop width",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "logo_width_mobile",
+      "min": 40,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Mobile width",
+      "default": 100
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding horizontal",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    }
+  ],
+  "presets": [
+    {
+      "name": "Logo"
+    }
+  ]
+}
 {% endschema %}
