@@ -24,7 +24,7 @@
         "paragraph_XRwwck": {
           "type": "paragraph",
           "settings": {
-            "text": "<p>Register for early access to DROP 0</p>"
+            "text": "<p>Register to access COLLECTION 0</p>"
           }
         },
         "email_form_XbQPJV": {
@@ -38,10 +38,10 @@
         "email_form_XbQPJV"
       ],
       "custom_css": [
-        ".newsletter-form__field input{background:#000!important;color:#fff!important;border:2px solid #fff!important}",
-        ".newsletter-form__field input::placeholder{color:transparent!important}",
-        ".newsletter-form__button{background:#fff!important;border:2px solid #fff!important;width:48px!important;min-width:48px!important;font-size:0!important;color:transparent!important}",
-        ".newsletter-form__button *{display:none!important}"
+        ".newsletter-form__field input {background: #000 !important; color: #fff !important; border: 2px solid #fff !important;}",
+        ".newsletter-form__field input::placeholder {color: transparent !important;}",
+        ".newsletter-form__button {background: #fff !important; border: 2px solid #fff !important; width: 48px !important; min-width: 48px !important; font-size: 0 !important; color: transparent !important;}",
+        ".newsletter-form__button * {display: none !important;}"
       ],
       "name": "t:sections.newsletter.presets.name",
       "settings": {
