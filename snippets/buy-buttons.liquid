@@ -1,43 +1,66 @@
-<product-form class="product-form">
+<div {{ block.shopify_attributes }}>
+  {%- if product != blank -%}
 
-  {%- form 'product', product, id: product_form_id -%}
+    <product-form class="product-form">
 
-    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+      {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
 
-    {% if product.tags contains 'request-only' %}
+        <input
+          type="hidden"
+          name="id"
+          value="{{ product.selected_or_first_available_variant.id }}"
+        >
 
-      {%- liquid
-        assign request_product = product.title
+        <div class="product-form__buttons">
 
-        if request_product == blank
-          assign request_product = product.selected_or_first_available_variant.title
-        endif
+          {% if product.tags contains 'request-only' %}
 
-        if request_product == blank
-          assign request_product = 'Product'
-        endif
-      -%}
+            {%- liquid
+              assign request_product = product.title
 
-      <a href="/pages/purchase-request?product={{ request_product | url_encode }}" 
-         class="product-form__submit button button--full-width button--primary">
-        Enquire to Purchase
-      </a>
+              if request_product == blank
+                assign request_product = product.selected_or_first_available_variant.title
+              endif
 
-    {% else %}
+              if request_product == blank
+                assign request_product = 'Product'
+              endif
+            -%}
 
-      <button
-        type="submit"
-        name="add"
-        class="product-form__submit button button--full-width button--primary"
-        {% if product.selected_or_first_available_variant.available == false %}
-          disabled
-        {% endif %}
-      >
-        {{ 'products.product.add_to_cart' | t }}
-      </button>
+            <a
+              href="/pages/purchase-request?product={{ request_product | url_encode }}"
+              class="product-form__submit button button--full-width button--primary"
+            >
+              Enquire to Purchase
+            </a>
 
-    {% endif %}
+          {% else %}
 
-  {%- endform -%}
+            <button
+              id="ProductSubmitButton-{{ section_id }}"
+              type="submit"
+              name="add"
+              class="product-form__submit button button--full-width button--primary"
+              {% if product.selected_or_first_available_variant.available == false %}
+                disabled
+              {% endif %}
+            >
+              <span>
+                {%- if product.selected_or_first_available_variant.available == false -%}
+                  {{ 'products.product.sold_out' | t }}
+                {%- else -%}
+                  {{ 'products.product.add_to_cart' | t }}
+                {%- endif -%}
+              </span>
+            </button>
 
-</product-form>
+          {% endif %}
+
+        </div>
+
+      {%- endform -%}
+
+    </product-form>
+
+  {%- endif -%}
+</div>
