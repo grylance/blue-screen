@@ -41,7 +41,7 @@ if (!customElements.get('product-form')) {
 
         this.handleErrorMessage();
 
-        this.submitButton.setAttribute('aria-disabled', true);
+        this.submitButton.setAttribute('aria-disabled', false);
         this.submitButton.classList.add('loading');
 
         if (this.loadingSpinner) {
