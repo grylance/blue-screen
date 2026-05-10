@@ -3,7 +3,7 @@
 {%- style -%}
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }};
   }
 
   @media screen and (min-width: 750px) {
@@ -11,6 +11,26 @@
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
+  }
+
+  /* 🔵 PRODUCT FIELD STYLING */
+  #RequestProduct {
+    background-color: #1e66ff;
+    color: #ffffff;
+    border: 1px solid #1e66ff;
+    padding: 14px 16px;
+    border-radius: 6px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  #RequestProduct::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  #RequestProduct:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(30, 102, 255, 0.35);
   }
 {%- endstyle -%}
 
@@ -27,7 +47,7 @@
 
     {%- form 'contact', id: 'ContactForm', class: 'isolate' -%}
 
-      <!-- 🔥 PRODUCT AUTO-FILL FIELD -->
+      <!-- PRODUCT FIELD -->
       <div class="field">
         <input
           class="field__input"
@@ -100,18 +120,15 @@
   </div>
 </div>
 
-<!-- 🔥 FIXED PRODUCT AUTO-FILL SCRIPT -->
+<!-- PRODUCT AUTO-FILL SCRIPT -->
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const params = new URLSearchParams(window.location.search);
-  const product = params.get('product');
+window.addEventListener("load", function () {
+  const product = new URLSearchParams(window.location.search).get("product");
 
-  if (product) {
-    const field = document.getElementById('RequestProduct');
+  const field = document.getElementById("RequestProduct");
 
-    if (field) {
-      field.value = decodeURIComponent(product);
-    }
+  if (product && field) {
+    field.value = decodeURIComponent(product);
   }
 });
 </script>

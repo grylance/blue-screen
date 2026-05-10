@@ -1,6 +1,18 @@
 {% if product.tags contains 'request-only' %}
 
-  <a href="/pages/purchase-request?product={{ product.title }}" 
+  {%- liquid
+    assign request_product = product.title
+
+    if request_product == blank
+      assign request_product = product.selected_or_first_available_variant.title
+    endif
+
+    if request_product == blank
+      assign request_product = 'Product'
+    endif
+  -%}
+
+  <a href="/pages/purchase-request?product={{ request_product | url_encode }}" 
      class="product-form__submit button button--full-width button--primary">
     Enquire to Purchase
   </a>
