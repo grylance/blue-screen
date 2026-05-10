@@ -21,11 +21,13 @@
       <h2 class="title title-wrapper--no-top-margin inline-richtext {{ section.settings.heading_size }}">
         {{ section.settings.heading }}
       </h2>
+    {%- else -%}
+      <h2 class="visually-hidden">{{ 'templates.contact.form.title' | t }}</h2>
     {%- endif -%}
 
     {%- form 'contact', id: 'ContactForm', class: 'isolate' -%}
 
-      <!-- 🔥 PRODUCT AUTO FIELD (VISIBLE) -->
+      <!-- 🔥 PRODUCT AUTO-FILL FIELD -->
       <div class="field">
         <input
           class="field__input"
@@ -98,17 +100,20 @@
   </div>
 </div>
 
-<!-- 🔥 AUTO-FILL SCRIPT -->
+<!-- 🔥 FIXED PRODUCT AUTO-FILL SCRIPT -->
 <script>
+document.addEventListener("DOMContentLoaded", function () {
   const params = new URLSearchParams(window.location.search);
   const product = params.get('product');
 
   if (product) {
     const field = document.getElementById('RequestProduct');
+
     if (field) {
-      field.value = product;
+      field.value = decodeURIComponent(product);
     }
   }
+});
 </script>
 
 {% schema %}
