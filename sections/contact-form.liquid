@@ -21,29 +21,21 @@
       <h2 class="title title-wrapper--no-top-margin inline-richtext {{ section.settings.heading_size }}">
         {{ section.settings.heading }}
       </h2>
-    {%- else -%}
-      <h2 class="visually-hidden">{{ 'templates.contact.form.title' | t }}</h2>
     {%- endif -%}
 
-    {%- liquid
-      assign contact_form_class = 'isolate'
-      if settings.animations_reveal_on_scroll
-        assign contact_form_class = 'isolate scroll-trigger animate--slide-in'
-      endif
-    -%}
+    {%- form 'contact', id: 'ContactForm', class: 'isolate' -%}
 
-    {%- form 'contact', id: 'ContactForm', class: contact_form_class -%}
-
-      <!-- 🔥 AUTO SUBJECT FIELD (PRODUCT INJECTION) -->
-      <input type="hidden" name="contact[subject]" id="RequestSubject">
-
-      {%- if form.posted_successfully? -%}
-        <h2 class="form-status">Message sent successfully</h2>
-      {%- elsif form.errors -%}
-        <div class="form__message">
-          <h2>Error sending message</h2>
-        </div>
-      {%- endif -%}
+      <!-- 🔥 PRODUCT AUTO FIELD (VISIBLE) -->
+      <div class="field">
+        <input
+          class="field__input"
+          type="text"
+          id="RequestProduct"
+          name="contact[product]"
+          placeholder="Product you're enquiring about"
+        >
+        <label class="field__label" for="RequestProduct">Product</label>
+      </div>
 
       <div class="contact__fields">
 
@@ -51,19 +43,25 @@
           <input
             class="field__input"
             type="text"
+            id="ContactForm-name"
             name="contact[name]"
             placeholder="Name"
+            autocomplete="name"
           >
+          <label class="field__label" for="ContactForm-name">Name</label>
         </div>
 
-        <div class="field">
+        <div class="field field--with-error">
           <input
             class="field__input"
             type="email"
+            id="ContactForm-email"
             name="contact[email]"
             placeholder="Email *"
             required
+            autocomplete="email"
           >
+          <label class="field__label" for="ContactForm-email">Email *</label>
         </div>
 
       </div>
@@ -72,17 +70,21 @@
         <input
           class="field__input"
           type="tel"
+          id="ContactForm-phone"
           name="contact[phone]"
           placeholder="Phone"
         >
+        <label class="field__label" for="ContactForm-phone">Phone</label>
       </div>
 
       <div class="field">
         <textarea
           class="text-area field__input"
+          id="ContactForm-body"
           name="contact[body]"
           placeholder="Message"
         ></textarea>
+        <label class="field__label" for="ContactForm-body">Message</label>
       </div>
 
       <div class="contact__button">
@@ -96,33 +98,30 @@
   </div>
 </div>
 
-<!-- 🔥 PRODUCT AUTO-FILL SCRIPT -->
+<!-- 🔥 AUTO-FILL SCRIPT -->
 <script>
   const params = new URLSearchParams(window.location.search);
   const product = params.get('product');
 
   if (product) {
-    const field = document.getElementById('RequestSubject');
+    const field = document.getElementById('RequestProduct');
     if (field) {
-      field.value = 'Request Availability — ' + product;
+      field.value = product;
     }
   }
 </script>
 
 {% schema %}
 {
-  "name": "t:sections.contact-form.name",
+  "name": "Contact form",
   "tag": "section",
   "class": "section",
-  "disabled_on": {
-    "groups": ["header", "footer"]
-  },
   "settings": [
     {
       "type": "inline_richtext",
       "id": "heading",
       "label": "Heading",
-      "default": "Contact"
+      "default": "Request Purchase"
     },
     {
       "type": "select",
