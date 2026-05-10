@@ -18,9 +18,11 @@
   <div class="contact page-width page-width--narrow section-{{ section.id }}-padding">
 
     {%- if section.settings.heading != blank -%}
-      <h2 class="title {{ section.settings.heading_size }}">
+      <h2 class="title title-wrapper--no-top-margin inline-richtext {{ section.settings.heading_size }}">
         {{ section.settings.heading }}
       </h2>
+    {%- else -%}
+      <h2 class="visually-hidden">{{ 'templates.contact.form.title' | t }}</h2>
     {%- endif -%}
 
     {%- liquid
@@ -32,7 +34,7 @@
 
     {%- form 'contact', id: 'ContactForm', class: contact_form_class -%}
 
-      <!-- 🔥 AUTO SUBJECT FIELD -->
+      <!-- 🔥 AUTO SUBJECT FIELD (PRODUCT INJECTION) -->
       <input type="hidden" name="contact[subject]" id="RequestSubject">
 
       {%- if form.posted_successfully? -%}
@@ -46,21 +48,41 @@
       <div class="contact__fields">
 
         <div class="field">
-          <input type="text" name="contact[name]" class="field__input" placeholder="Name">
+          <input
+            class="field__input"
+            type="text"
+            name="contact[name]"
+            placeholder="Name"
+          >
         </div>
 
         <div class="field">
-          <input type="email" name="contact[email]" class="field__input" placeholder="Email *" required>
+          <input
+            class="field__input"
+            type="email"
+            name="contact[email]"
+            placeholder="Email *"
+            required
+          >
         </div>
 
       </div>
 
       <div class="field">
-        <input type="tel" name="contact[phone]" class="field__input" placeholder="Phone">
+        <input
+          class="field__input"
+          type="tel"
+          name="contact[phone]"
+          placeholder="Phone"
+        >
       </div>
 
       <div class="field">
-        <textarea name="contact[body]" class="text-area field__input" placeholder="Message"></textarea>
+        <textarea
+          class="text-area field__input"
+          name="contact[body]"
+          placeholder="Message"
+        ></textarea>
       </div>
 
       <div class="contact__button">
@@ -70,6 +92,7 @@
       </div>
 
     {%- endform -%}
+
   </div>
 </div>
 
@@ -88,14 +111,18 @@
 
 {% schema %}
 {
-  "name": "Contact form",
+  "name": "t:sections.contact-form.name",
   "tag": "section",
   "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
   "settings": [
     {
       "type": "inline_richtext",
       "id": "heading",
-      "label": "Heading"
+      "label": "Heading",
+      "default": "Contact"
     },
     {
       "type": "select",
@@ -113,6 +140,26 @@
       "id": "color_scheme",
       "label": "Color scheme",
       "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
     }
   ],
   "presets": [
