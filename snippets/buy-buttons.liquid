@@ -1,46 +1,43 @@
-{% if product.tags contains 'request-only' %}
+<product-form class="product-form">
 
-  {%- liquid
-    assign request_product = product.title
+  {%- form 'product', product, id: product_form_id -%}
 
-    if request_product == blank
-      assign request_product = product.selected_or_first_available_variant.title
-    endif
+    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
 
-    if request_product == blank
-      assign request_product = 'Product'
-    endif
-  -%}
+    {% if product.tags contains 'request-only' %}
 
-  <a href="/pages/purchase-request?product={{ request_product | url_encode }}" 
-     class="product-form__submit button button--full-width button--primary">
-    Enquire to Purchase
-  </a>
+      {%- liquid
+        assign request_product = product.title
 
-{% else %}
+        if request_product == blank
+          assign request_product = product.selected_or_first_available_variant.title
+        endif
 
-  <button
-    id="ProductSubmitButton-{{ section_id }}"
-    type="submit"
-    name="add"
-    class="product-form__submit button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
-    {% if product.selected_or_first_available_variant.available == false
-      or quantity_rule_soldout
-      or product.selected_or_first_available_variant == null
-    %}
-      disabled
-    {% endif %}
-  >
-    <span>
-      {%- if product.selected_or_first_available_variant == null -%}
-        {{ 'products.product.unavailable' | t }}
-      {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
-        {{ 'products.product.sold_out' | t }}
-      {%- else -%}
+        if request_product == blank
+          assign request_product = 'Product'
+        endif
+      -%}
+
+      <a href="/pages/purchase-request?product={{ request_product | url_encode }}" 
+         class="product-form__submit button button--full-width button--primary">
+        Enquire to Purchase
+      </a>
+
+    {% else %}
+
+      <button
+        type="submit"
+        name="add"
+        class="product-form__submit button button--full-width button--primary"
+        {% if product.selected_or_first_available_variant.available == false %}
+          disabled
+        {% endif %}
+      >
         {{ 'products.product.add_to_cart' | t }}
-      {%- endif -%}
-    </span>
-    {%- render 'loading-spinner' -%}
-  </button>
+      </button>
 
-{% endif %}
+    {% endif %}
+
+  {%- endform -%}
+
+</product-form>
