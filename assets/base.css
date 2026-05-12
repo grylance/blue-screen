@@ -3640,34 +3640,4 @@ a.big_link:hover {
     display: block;
   }
 
-}.product-card {
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  backface-visibility: hidden;
-}
-.product-grid {
-  background: #fff; /* or your exact theme background */
-}
-
-.product-card {
-  background: #fff;
-}.product-card {
-  transform: translate3d(0, 0, 0);
-  -webkit-transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
-}
-
-.product-grid {
-  transform: translate3d(0, 0, 0);
-  isolation: isolate;
-}.product-grid {
-  transform: none !important;
-  -webkit-transform: none !important;
-  will-change: auto !important;
-  isolation: isolate;
-}.product-card {
-  transform: none !important;
-  -webkit-transform: none !important;
-  backface-visibility: visible;
-  outline: 1px solid transparent;
 }
