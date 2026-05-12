@@ -11,7 +11,6 @@
   "sections": {
     "featured_collection": {
       "type": "featured-collection",
-      "disabled": true,
       "settings": {
         "collection": "all",
         "products_to_show": 25,
@@ -40,6 +39,7 @@
     },
     "video_aAhBVx": {
       "type": "video",
+      "disabled": true,
       "custom_css": [
         "/* FORCE VIDEO TO STAY 16:9 */.video-wrapper {aspect-ratio: 16 / 9; height: auto !important; max-height: 100vh; background: #111;}",
         ".video-wrapper iframe,.video-wrapper video {object-fit: contain !important;}"

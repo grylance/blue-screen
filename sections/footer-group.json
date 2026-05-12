@@ -37,6 +37,7 @@
         "paragraph_XRwwck",
         "email_form_XbQPJV"
       ],
+      "disabled": true,
       "custom_css": [
         ".newsletter-form__field input {background: #000 !important; color: #fff !important; border: 2px solid #fff !important;}",
         ".newsletter-form__field input::placeholder {color: transparent !important;}",
@@ -53,6 +54,7 @@
     },
     "custom_liquid_b67KER": {
       "type": "custom-liquid",
+      "disabled": true,
       "name": "t:sections.custom-liquid.presets.name",
       "settings": {
         "custom_liquid": "",
@@ -63,6 +65,7 @@
     },
     "custom_liquid_kf3EnD": {
       "type": "custom-liquid",
+      "disabled": true,
       "name": "t:sections.custom-liquid.presets.name",
       "settings": {
         "custom_liquid": "",
@@ -73,7 +76,6 @@
     },
     "footer": {
       "type": "footer",
-      "disabled": true,
       "settings": {
         "color_scheme": "scheme-1",
         "newsletter_enable": true,
