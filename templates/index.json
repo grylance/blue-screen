@@ -49,10 +49,43 @@
         "video": "shopify://files/videos/0325(1).mov",
         "video_url": ""
       }
+    },
+    "17786197839f2a3fd5": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_14d9730_fLCwT6": {
+          "type": "ai_gen_block_14d9730",
+          "disabled": true,
+          "settings": {
+            "columns_desktop": 4,
+            "columns_mobile": "2",
+            "grid_gap": 16,
+            "desktop_width_percent": 100,
+            "products_per_page": 12,
+            "scroll_threshold": 500,
+            "end_message": "You've reached the end",
+            "title_size": 16,
+            "price_size": 14,
+            "text_color": "#002fa7",
+            "price_color": "#002fa7",
+            "image_bg_color": "#f4f4f4",
+            "spinner_color": "#002fa7",
+            "end_message_color": "#666666",
+            "spinner_size": 40,
+            "end_message_size": 14
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_14d9730_fLCwT6"
+      ],
+      "settings": {}
     }
   },
   "order": [
     "featured_collection",
-    "video_aAhBVx"
+    "video_aAhBVx",
+    "17786197839f2a3fd5"
   ]
 }
