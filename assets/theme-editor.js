@@ -52,3 +52,37 @@ document.addEventListener('shopify:section:deselect', () => hideProductModal());
 document.addEventListener('shopify:inspector:activate', () => hideProductModal());
 
 document.addEventListener('shopify:inspector:deactivate', () => hideProductModal());
+let loading = false;
+
+window.addEventListener('scroll', () => {
+  const nearBottom =
+    window.innerHeight + window.scrollY >= document.body.offsetHeight - 800;
+
+  if (!nearBottom || loading) return;
+
+  const nextLink = document.querySelector('.pagination__next a');
+  if (!nextLink) return;
+
+  loading = true;
+
+  fetch(nextLink.href)
+    .then(res => res.text())
+    .then(html => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+
+      const grid = document.querySelector('.product-grid');
+      const newProducts = doc.querySelectorAll('.product-grid .product-card');
+
+      newProducts.forEach(item => grid.appendChild(item));
+
+      const newNext = doc.querySelector('.pagination__next a');
+      const currentNext = document.querySelector('.pagination__next a');
+
+      if (currentNext) {
+        currentNext.href = newNext ? newNext.href : '';
+      }
+
+      loading = false;
+    });
+});
