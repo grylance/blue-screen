@@ -1,88 +1,45 @@
-function hideProductModal() {
-  const productModal = document.querySelectorAll('product-modal[open]');
-  productModal && productModal.forEach((modal) => modal.hide());
-}
+(function () {
+  let loading = false;
 
-document.addEventListener('shopify:block:select', function (event) {
-  hideProductModal();
-  const blockSelectedIsSlide = event.target.classList.contains('slideshow__slide');
-  if (!blockSelectedIsSlide) return;
-
-  const parentSlideshowComponent = event.target.closest('slideshow-component');
-  parentSlideshowComponent.pause();
-
-  setTimeout(function () {
-    parentSlideshowComponent.slider.scrollTo({
-      left: event.target.offsetLeft,
-    });
-  }, 200);
-});
-
-document.addEventListener('shopify:block:deselect', function (event) {
-  const blockDeselectedIsSlide = event.target.classList.contains('slideshow__slide');
-  if (!blockDeselectedIsSlide) return;
-  const parentSlideshowComponent = event.target.closest('slideshow-component');
-  if (parentSlideshowComponent.autoplayButtonIsSetToPlay) parentSlideshowComponent.play();
-});
-
-document.addEventListener('shopify:section:load', () => {
-  hideProductModal();
-  const zoomOnHoverScript = document.querySelector('[id^=EnableZoomOnHover]');
-  if (!zoomOnHoverScript) return;
-  if (zoomOnHoverScript) {
-    const newScriptTag = document.createElement('script');
-    newScriptTag.src = zoomOnHoverScript.src;
-    zoomOnHoverScript.parentNode.replaceChild(newScriptTag, zoomOnHoverScript);
+  function getNextPageUrl() {
+    return document.querySelector('a[rel="next"]')?.href ||
+           document.querySelector('.pagination__next a')?.href ||
+           null;
   }
-});
 
-document.addEventListener('shopify:section:unload', (event) => {
-  document.querySelectorAll(`[data-section="${event.detail.sectionId}"]`).forEach((element) => {
-    element.remove();
-    document.body.classList.remove('overflow-hidden');
-  });
-});
+  function getGrid() {
+    return document.querySelector('.grid');
+  }
 
-document.addEventListener('shopify:section:reorder', () => hideProductModal());
+  function getItemsFromHTML(html) {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    return doc.querySelectorAll('.grid > *');
+  }
 
-document.addEventListener('shopify:section:select', () => hideProductModal());
+  window.addEventListener('scroll', async () => {
+    const nearBottom =
+      window.innerHeight + window.scrollY >= document.body.offsetHeight - 800;
 
-document.addEventListener('shopify:section:deselect', () => hideProductModal());
+    if (!nearBottom || loading) return;
 
-document.addEventListener('shopify:inspector:activate', () => hideProductModal());
+    const nextUrl = getNextPageUrl();
+    const grid = getGrid();
 
-document.addEventListener('shopify:inspector:deactivate', () => hideProductModal());
-let loading = false;
+    if (!nextUrl || !grid) return;
 
-window.addEventListener('scroll', () => {
-  const nearBottom =
-    window.innerHeight + window.scrollY >= document.body.offsetHeight - 800;
+    loading = true;
 
-  if (!nearBottom || loading) return;
+    try {
+      const res = await fetch(nextUrl);
+      const html = await res.text();
 
-  const nextLink = document.querySelector('.pagination__next a');
-  if (!nextLink) return;
-
-  loading = true;
-
-  fetch(nextLink.href)
-    .then(res => res.text())
-    .then(html => {
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-
-      const grid = document.querySelector('.product-grid');
-      const newProducts = doc.querySelectorAll('.product-grid .product-card');
-
-      newProducts.forEach(item => grid.appendChild(item));
-
-      const newNext = doc.querySelector('.pagination__next a');
-      const currentNext = document.querySelector('.pagination__next a');
-
-      if (currentNext) {
-        currentNext.href = newNext ? newNext.href : '';
-      }
+      const items = getItemsFromHTML(html);
+      items.forEach(item => grid.appendChild(item));
 
       loading = false;
-    });
-});
+    } catch (e) {
+      console.error('Infinite scroll error:', e);
+      loading = false;
+    }
+  });
+})();
