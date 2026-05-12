@@ -3660,4 +3660,9 @@ a.big_link:hover {
 .product-grid {
   transform: translate3d(0, 0, 0);
   isolation: isolate;
+}.product-grid {
+  transform: none !important;
+  -webkit-transform: none !important;
+  will-change: auto !important;
+  isolation: isolate;
 }
