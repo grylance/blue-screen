@@ -3640,4 +3640,15 @@ a.big_link:hover {
     display: block;
   }
 
+}.product-card {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+}
+.product-grid {
+  background: #fff; /* or your exact theme background */
+}
+
+.product-card {
+  background: #fff;
 }
