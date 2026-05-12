@@ -3621,3 +3621,23 @@ a.big_link {
 a.big_link:hover {
   text-decoration: underline;
 }
+@media screen and (max-width: 749px) {
+
+  .card,
+  .card-wrapper,
+  .card__inner,
+  .card__media,
+  .media,
+  .media img,
+  .grid__item {
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    background: transparent !important;
+  }
+
+  .media img {
+    display: block;
+  }
+
+}
