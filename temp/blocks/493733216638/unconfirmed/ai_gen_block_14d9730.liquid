@@ -1,6 +1,429 @@
+{% doc %}
+  @prompt
+    Add infinite scroll to product collection pages, replacing the "View all" button so that more products automatically load as the user scrolls down the page.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-infinite-scroll-{{ ai_gen_id }} {
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    display: block;
+  }
+
+  .ai-infinite-scroll__grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat({{ block.settings.columns_desktop }}, 1fr);
+    gap: {{ block.settings.grid_gap }}px;
+    margin-bottom: 40px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-infinite-scroll__grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.columns_mobile }}, 1fr);
+    }
+  }
+
+  .ai-infinite-scroll__product-card-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: {{ block.settings.text_color }};
+  }
+
+  .ai-infinite-scroll__image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    overflow: hidden;
+    background-color: {{ block.settings.image_bg_color }};
+    margin-bottom: 12px;
+  }
+
+  .ai-infinite-scroll__image-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-infinite-scroll__product-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size }}px;
+    margin: 0 0 8px;
+    font-weight: 500;
+  }
+
+  .ai-infinite-scroll__product-price-{{ ai_gen_id }} {
+    font-size: {{ block.settings.price_size }}px;
+    color: {{ block.settings.price_color }};
+  }
+
+  .ai-infinite-scroll__loader-{{ ai_gen_id }} {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+  }
+
+  .ai-infinite-scroll__loader-{{ ai_gen_id }}.active {
+    display: flex;
+  }
+
+  .ai-infinite-scroll__spinner-{{ ai_gen_id }} {
+    width: {{ block.settings.spinner_size }}px;
+    height: {{ block.settings.spinner_size }}px;
+    border: 3px solid {{ block.settings.spinner_color }};
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: ai-infinite-scroll-spin-{{ ai_gen_id }} 0.8s linear infinite;
+  }
+
+  @keyframes ai-infinite-scroll-spin-{{ ai_gen_id }} {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .ai-infinite-scroll__end-message-{{ ai_gen_id }} {
+    display: none;
+    text-align: center;
+    padding: 40px 0;
+    color: {{ block.settings.end_message_color }};
+    font-size: {{ block.settings.end_message_size }}px;
+  }
+
+  .ai-infinite-scroll__end-message-{{ ai_gen_id }}.active {
+    display: block;
+  }
+
+  .ai-infinite-scroll__empty-state-{{ ai_gen_id }} {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+  }
+
+  .ai-infinite-scroll__empty-state-{{ ai_gen_id }} svg {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+    opacity: 0.3;
+  }
+{% endstyle %}
+
+<infinite-scroll-{{ ai_gen_id }}
+  class="ai-infinite-scroll-{{ ai_gen_id }}"
+  data-collection-handle="{{ collection.handle }}"
+  data-products-per-page="{{ block.settings.products_per_page }}"
+  data-scroll-threshold="{{ block.settings.scroll_threshold }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-infinite-scroll__grid-{{ ai_gen_id }}" data-product-grid>
+    {% if collection.products.size > 0 %}
+      {% for product in collection.products limit: block.settings.products_per_page %}
+        <a
+          href="{{ product.url }}"
+          class="ai-infinite-scroll__product-card-{{ ai_gen_id }}"
+        >
+          <div class="ai-infinite-scroll__image-wrapper-{{ ai_gen_id }}">
+            {% if product.featured_image %}
+              <img
+                src="{{ product.featured_image | image_url: width: 600 }}"
+                alt="{{ product.featured_image.alt | escape }}"
+                class="ai-infinite-scroll__image-{{ ai_gen_id }}"
+                loading="lazy"
+                width="600"
+                height="600"
+              >
+            {% else %}
+              <div class="ai-infinite-scroll__image-placeholder-{{ ai_gen_id }}">
+                {{ 'product-1' | placeholder_svg_tag }}
+              </div>
+            {% endif %}
+          </div>
+          <h3 class="ai-infinite-scroll__product-title-{{ ai_gen_id }}">{{ product.title }}</h3>
+          <div class="ai-infinite-scroll__product-price-{{ ai_gen_id }}">
+            {{ product.price | money }}
+          </div>
+        </a>
+      {% endfor %}
+    {% else %}
+      <div class="ai-infinite-scroll__empty-state-{{ ai_gen_id }}">
+        {{ 'collection-1' | placeholder_svg_tag }}
+        <p>No products found in this collection</p>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="ai-infinite-scroll__loader-{{ ai_gen_id }}" data-loader>
+    <div class="ai-infinite-scroll__spinner-{{ ai_gen_id }}"></div>
+  </div>
+
+  <div class="ai-infinite-scroll__end-message-{{ ai_gen_id }}" data-end-message>
+    {{ block.settings.end_message }}
+  </div>
+</infinite-scroll-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class InfiniteScroll{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.currentPage = 1;
+        this.isLoading = false;
+        this.hasMoreProducts = true;
+        this.collectionHandle = this.dataset.collectionHandle;
+        this.productsPerPage = parseInt(this.dataset.productsPerPage);
+        this.scrollThreshold = parseInt(this.dataset.scrollThreshold);
+      }
+
+      connectedCallback() {
+        this.productGrid = this.querySelector('[data-product-grid]');
+        this.loader = this.querySelector('[data-loader]');
+        this.endMessage = this.querySelector('[data-end-message]');
+        
+        this.setupInfiniteScroll();
+      }
+
+      setupInfiniteScroll() {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting && !this.isLoading && this.hasMoreProducts) {
+                this.loadMoreProducts();
+              }
+            });
+          },
+          {
+            rootMargin: `${this.scrollThreshold}px`
+          }
+        );
+
+        observer.observe(this.loader);
+      }
+
+      async loadMoreProducts() {
+        if (this.isLoading || !this.hasMoreProducts) return;
+
+        this.isLoading = true;
+        this.loader.classList.add('active');
+        this.currentPage++;
+
+        try {
+          const response = await fetch(
+            `/collections/${this.collectionHandle}?page=${this.currentPage}&view=json`
+          );
+
+          if (!response.ok) {
+            throw new Error('Failed to load products');
+          }
+
+          const html = await response.text();
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+          const products = doc.querySelectorAll('.ai-infinite-scroll__product-card-{{ ai_gen_id }}');
+
+          if (products.length === 0) {
+            this.hasMoreProducts = false;
+            this.loader.classList.remove('active');
+            this.endMessage.classList.add('active');
+            return;
+          }
+
+          products.forEach((product) => {
+            this.productGrid.appendChild(product.cloneNode(true));
+          });
+
+          if (products.length < this.productsPerPage) {
+            this.hasMoreProducts = false;
+            this.endMessage.classList.add('active');
+          }
+        } catch (error) {
+          console.error('Error loading products:', error);
+          this.hasMoreProducts = false;
+          this.endMessage.textContent = 'Error loading products';
+          this.endMessage.classList.add('active');
+        } finally {
+          this.isLoading = false;
+          this.loader.classList.remove('active');
+        }
+      }
+    }
+
+    customElements.define('infinite-scroll-{{ ai_gen_id }}', InfiniteScroll{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Infinite scroll products",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns on desktop",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns on mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Grid gap",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Infinite scroll"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 4,
+      "max": 24,
+      "step": 4,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "scroll_threshold",
+      "label": "Load distance",
+      "min": 100,
+      "max": 1000,
+      "step": 100,
+      "unit": "px",
+      "default": 500
+    },
+    {
+      "type": "text",
+      "id": "end_message",
+      "label": "End message",
+      "default": "You've reached the end"
+    },
+    {
+      "type": "header",
+      "content": "Product card"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "price_size",
+      "label": "Price size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#002fa7"
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Price",
+      "default": "#002fa7"
+    },
+    {
+      "type": "color",
+      "id": "image_bg_color",
+      "label": "Image background",
+      "default": "#f4f4f4"
+    },
+    {
+      "type": "color",
+      "id": "spinner_color",
+      "label": "Spinner",
+      "default": "#002fa7"
+    },
+    {
+      "type": "color",
+      "id": "end_message_color",
+      "label": "End message",
+      "default": "#666666"
+    },
+    {
+      "type": "header",
+      "content": "Loader style"
+    },
+    {
+      "type": "range",
+      "id": "spinner_size",
+      "label": "Spinner size",
+      "min": 20,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "end_message_size",
+      "label": "End message size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    }
+  ],
+  "presets": [
+    {
+      "name": "Infinite scroll products"
+    }
+  ]
+}
 {% endschema %}
