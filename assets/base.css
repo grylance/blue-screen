@@ -3665,4 +3665,9 @@ a.big_link:hover {
   -webkit-transform: none !important;
   will-change: auto !important;
   isolation: isolate;
+}.product-card {
+  transform: none !important;
+  -webkit-transform: none !important;
+  backface-visibility: visible;
+  outline: 1px solid transparent;
 }
