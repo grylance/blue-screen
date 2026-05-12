@@ -3651,4 +3651,13 @@ a.big_link:hover {
 
 .product-card {
   background: #fff;
+}.product-card {
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+.product-grid {
+  transform: translate3d(0, 0, 0);
+  isolation: isolate;
 }
