@@ -3640,4 +3640,22 @@ a.big_link:hover {
     display: block;
   }
 
+}.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  background: #fff;
+}.product-card {
+  position: relative;
+  background: #fff;
+  z-index: 1;
+}.product-card,
+.product-grid {
+  transform: none !important;
+  -webkit-transform: none !important;
+  filter: none !important;
+  will-change: auto !important;
+}.product-card:hover {
+  transform: none !important;
+  box-shadow: none !important;
 }
