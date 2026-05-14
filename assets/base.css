@@ -1106,7 +1106,7 @@ summary::-webkit-details-marker {
 /* component-media */
 .media {
   display: block;
-  background-color: rgba(var(--color-foreground), 0.1);
+  background-color: transparent;
   position: relative;
   overflow: hidden;
 }
